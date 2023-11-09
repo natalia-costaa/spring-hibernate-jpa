@@ -1,6 +1,7 @@
 package com.luv2.code.cruddemo;
 
 import com.luv2.code.cruddemo.dao.StudentDAO;
+import com.luv2.code.cruddemo.dao.StudentDAOImpl;
 import com.luv2.code.cruddemo.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,29 +18,48 @@ public class CruddemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
-			createMultipleStudent(studentDAO);
+			readStudent(studentDAO);
 		};
 
 	}
 
-	private void createMultipleStudent(StudentDAO studentDAO) {
+	private void readStudent(StudentDAO studentDAO) {
 
-		// create multiple students
-		System.out.println("Creating 3 Student Object...");
-		Student tempStudent1 = new Student("John", "Doe", "paul@luv2code.com");
-		Student tempStudent2 = new Student("Mary", "Public", "mary@luv2code.com");
-		Student tempStudent3 = new Student("Bonita", "Applebum", "bonita@luv2code.com");
+		System.out.println("Creating new student object...");
+		Student tempStudent = new Student("Daffy", "Duck", "daffy@luv2code.com");
 
 		// save the student object
-		System.out.println("Saving the Student...");
-		studentDAO.save(tempStudent1);
-		studentDAO.save(tempStudent2);
-		studentDAO.save(tempStudent3);
+		System.out.println("Saving the student...");
+		studentDAO.save(tempStudent);
 
 		// display id of the saved student
-		System.out.println("Saved student. Generated id: " + tempStudent1.getId());
-		System.out.println("Saved student. Generated id: " + tempStudent2.getId());
-		System.out.println("Saved student. Generated id: " + tempStudent3.getId());
+		System.out.println("Saved student. Generated id: " + tempStudent.getId());
+
+		// retrieve student based on the id: primary key
+		System.out.println("\nRetrieving student with id: " + tempStudent.getId());
+		Student myStudent = studentDAO.findById(tempStudent.getId());
+		System.out.println("Found the student: " + myStudent);
+
+	}
+
+//	private void createMultipleStudent(StudentDAO studentDAO) {
+//
+//		// create multiple students
+//		System.out.println("Creating 3 Student Object...");
+//		Student tempStudent1 = new Student("John", "Doe", "paul@luv2code.com");
+//		Student tempStudent2 = new Student("Mary", "Public", "mary@luv2code.com");
+//		Student tempStudent3 = new Student("Bonita", "Applebum", "bonita@luv2code.com");
+//
+//		// save the student object
+//		System.out.println("Saving the Student...");
+//		studentDAO.save(tempStudent1);
+//		studentDAO.save(tempStudent2);
+//		studentDAO.save(tempStudent3);
+//
+//		// display id of the saved student
+//		System.out.println("Saved student. Generated id: " + tempStudent1.getId());
+//		System.out.println("Saved student. Generated id: " + tempStudent2.getId());
+//		System.out.println("Saved student. Generated id: " + tempStudent3.getId());
 
 //	private void createStudent(StudentDAO studentDAO) {
 //
@@ -56,7 +76,5 @@ public class CruddemoApplication {
 //
 //	}
 
-
-	}
 
 }
