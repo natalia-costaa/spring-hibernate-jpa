@@ -37,7 +37,7 @@ public class StudentDAOImpl implements StudentDAO{
     public List<Student> findAll() {
         // create query
         TypedQuery<Student> theQuery = entityManager.createQuery(
-                "FROM Student  order by lastName ",Student.class);
+                "FROM Student WHERE email LIKE '%luv2code.com' ",Student.class);
 
         // return query results
         return theQuery.getResultList();
